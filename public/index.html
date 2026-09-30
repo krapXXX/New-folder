@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Генератор Нікнеймів</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background: #f4f4f9; }
+        .container { background: white; padding: 30px; border-radius: 10px; display: inline-block; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; font-size: 16px; background: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        #result { margin-top: 20px; font-size: 20px; font-weight: bold; color: #333; }
+        .footer { margin-top: 40px; font-size: 14px; color: #777; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Генератор Крутих Нікнеймів</h2>
+        <button onclick="generateNick()">Згенерувати</button>
+        <div id="result">Натисніть кнопку!</div>
+        
+        <div class="footer">
+            <p>Працює на сервері з IP: <strong id="server-ip">Завантаження...</strong></p>
+        </div>
+    </div>
+
+    <script>
+        const adjectives = ["Cyber", "Neon", "Shadow", "Epic", "Dark", "Mega", "Swift"];
+        const nouns = ["Viper", "Ninja", "Hacker", "Phoenix", "Ghost", "Storm", "Titan"];
+
+        function generateNick() {
+            let adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+            let noun = nouns[Math.floor(Math.random() * nouns.length)];
+            let num = Math.floor(Math.random() * 900) + 100;
+            document.getElementById("result").innerText = adj + noun + num;
+        }
+
+        // Автоматично запитуємо IP-адресу сервера при завантаженні сторінки
+        fetch('/api/ip')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('server-ip').innerText = data.ip;
+            })
+            .catch(err => {
+                document.getElementById('server-ip').innerText = 'Не вдалося отримати IP';
+            });
+    </script>
+</body>
+</html>
